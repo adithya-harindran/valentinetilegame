@@ -2,7 +2,9 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState, useEffect } from "react";const imagesList = [
+import { useState, useEffect } from "react";
+
+const imagesList = [
   "/game-photos/1.webp",
   "/game-photos/2.webp",
   "/game-photos/3.webp",
@@ -23,9 +25,7 @@ import { useState, useEffect } from "react";const imagesList = [
   "/game-photos/18.webp",
 ];
 
-
-
-const imagePairs = imagesList.flatMap(img => [img, img]);
+const imagePairs = imagesList.flatMap((img) => [img, img]);
 
 const shuffleArray = (array: string[]) => {
   const copy = [...array];
@@ -56,9 +56,20 @@ export default function PhotoPairGame({ handleShowProposal }: ValentinesProposal
   const [incorrect, setIncorrect] = useState<number[]>([]);
   const [shuffledImages, setShuffledImages] = useState<string[]>([]);
 
+  // Shuffle once on mount
   useEffect(() => {
     setShuffledImages(shuffleArray(imagePairs));
   }, []);
+
+  // 🔥 Background preload (no visual reveal, just caches images)
+  useEffect(() => {
+    if (!shuffledImages.length) return;
+
+    shuffledImages.forEach((src) => {
+      const img = new window.Image();
+      img.src = src;
+    });
+  }, [shuffledImages]);
 
   const handleClick = async (index: number) => {
     if (selected.length === 2 || matched.includes(index) || selected.includes(index)) return;
@@ -87,16 +98,10 @@ export default function PhotoPairGame({ handleShowProposal }: ValentinesProposal
     }
   }, [matched, handleShowProposal]);
 
-  if (shuffledImages.length === 0) return null; // Prevent hydration mismatch
+  if (shuffledImages.length === 0) return null;
 
   return (
     <div className="grid grid-cols-9 gap-1 lg:gap-2 max-w-[95vw] mx-auto place-items-center">
-      <div className="hidden">
-        {shuffledImages.map((image, i) => (
-          <Image key={i} src={image} alt={`Image ${i + 1}`} fill className="object-cover" />
-        ))}
-      </div>
-
       {heartLayout.flat().map((index, i) =>
         index !== null ? (
           <motion.div
@@ -116,8 +121,8 @@ export default function PhotoPairGame({ handleShowProposal }: ValentinesProposal
             {(selected.includes(index) || matched.includes(index)) && (
               <motion.div
                 className="w-full h-full absolute"
-                initial={{ rotateY: -180 }}
-                animate={{ rotateY: 0 }}
+                initial={{ rotateY: -180, opacity: 0 }}
+                animate={{ rotateY: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
                 style={{ backfaceVisibility: "hidden" }}
               >
@@ -125,6 +130,7 @@ export default function PhotoPairGame({ handleShowProposal }: ValentinesProposal
                   src={shuffledImages[index]}
                   alt={`Image ${index + 1}`}
                   fill
+                  sizes="(max-width: 1024px) 25vw, 80px"
                   className="rounded-sm lg:rounded-md object-cover"
                 />
               </motion.div>
