@@ -2,27 +2,27 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState, useEffect } from "react";
-const imagesList = [
-  "/game-photos/1.jpg",
-  "/game-photos/2.jpg",
-  "/game-photos/3.jpg",
-  "/game-photos/4.jpg",
-  "/game-photos/5.jpg",
-  "/game-photos/6.jpg",
-  "/game-photos/7.jpg",
-  "/game-photos/8.jpg",
-  "/game-photos/9.jpg",
-  "/game-photos/10.jpg",
-  "/game-photos/11.jpg",
-  "/game-photos/12.jpg",
-  "/game-photos/13.jpg",
-  "/game-photos/14.jpg",
-  "/game-photos/15.jpg",
-  "/game-photos/16.jpg",
-  "/game-photos/17.jpg",
-  "/game-photos/18.jpg",
+import { useState, useEffect } from "react";const imagesList = [
+  "/game-photos/1.webp",
+  "/game-photos/2.webp",
+  "/game-photos/3.webp",
+  "/game-photos/4.webp",
+  "/game-photos/5.webp",
+  "/game-photos/6.webp",
+  "/game-photos/7.webp",
+  "/game-photos/8.webp",
+  "/game-photos/9.webp",
+  "/game-photos/10.webp",
+  "/game-photos/11.webp",
+  "/game-photos/12.webp",
+  "/game-photos/13.webp",
+  "/game-photos/14.webp",
+  "/game-photos/15.webp",
+  "/game-photos/16.webp",
+  "/game-photos/17.webp",
+  "/game-photos/18.webp",
 ];
+
 
 
 const imagePairs = imagesList.flatMap(img => [img, img]);
