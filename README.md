@@ -93,7 +93,4 @@ Contributions are welcome! Feel free to submit issues and enhancement requests.
 
 
 ---
-
-Made with ❤️ for my Valentine
-
-*Note: This project is meant for romantic purposes. Please use responsibly and spread love!*
+made for the loves with all the love.
